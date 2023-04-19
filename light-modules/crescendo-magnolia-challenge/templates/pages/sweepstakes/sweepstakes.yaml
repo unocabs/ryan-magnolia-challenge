@@ -1,0 +1,12 @@
+dialog: crescendo-magnolia-challenge:pages/global
+renderType: freemarker
+title: Sweepstakes
+templateScript: /crescendo-magnolia-challenge/templates/pages/sweepstakes/sweepstakes.ftl
+areas:
+  main:
+    availableComponents:
+      sweepstakesEntryFormYAML:
+        id: crescendo-magnolia-challenge:components/sweepstakes/sweepstakesEntryForm
+      sweepstakesEntryFormSpring:
+        id: crescendo-magnolia-challenge-core:components/sweepstakes/sweepstakesEntryForm
+    type: single

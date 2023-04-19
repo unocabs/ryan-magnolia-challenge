@@ -1,0 +1,4 @@
+renderType: freemarker
+modelClass: com.crescendocollective.templates.PortfolioInfoFormModel
+title: Portfolio Info Entry Form
+templateScript: /crescendo-magnolia-challenge/templates/components/portfolio-info/portfolioInfoForm.ftl

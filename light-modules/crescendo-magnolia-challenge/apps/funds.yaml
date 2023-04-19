@@ -1,0 +1,175 @@
+appClass: info.magnolia.ui.contentapp.ContentApp
+class: info.magnolia.ui.contentapp.ContentAppDescriptor
+label: Funds
+icon: icon-paid
+subApps:
+  browser:
+    label: Funds
+    class: info.magnolia.ui.contentapp.browser.BrowserSubAppDescriptor
+    subAppClass: info.magnolia.ui.contentapp.browser.BrowserSubApp
+    contentConnector:
+      includeProperties: false
+      workspace: funds
+      rootPath: /
+      defaultOrder: jcrName
+      nodeTypes:
+        - name: mgnl:portfolio
+          icon: icon-analytics-app
+        - name: mgnl:fund
+          icon: icon-paid
+    workbench:
+      dropConstraintClass: info.magnolia.ui.workbench.tree.drop.AlwaysTrueDropConstraint
+      editable: false
+      contentViews:
+        - name: tree
+          class: info.magnolia.ui.workbench.tree.TreePresenterDefinition
+          sortable: false
+          columns: &myColumns
+            - name: name
+              label: Name
+              editable: false
+              propertyName: jcrName
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+              expandRatio: 1
+            - name: portfolioCode
+              label: Portfolio Code
+              editable: false
+              propertyName: portfolioCode
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+              expandRatio: 1
+        - name: list
+          class: info.magnolia.ui.workbench.list.ListPresenterDefinition
+          columns: *myColumns
+        - name: search
+          class: info.magnolia.ui.workbench.search.SearchPresenterDefinition
+          columns: *myColumns
+    actions:
+      addPortfolio:
+        label: Add portfolio
+        icon: icon-add-item
+        nodeType: mgnl:portfolio
+        appName: funds
+        subAppId: detail
+        class: info.magnolia.ui.contentapp.detail.action.CreateItemActionDefinition
+        availability:
+          root: true
+      editPortfolio:
+        label: Edit Portfolio
+        icon: icon-edit
+        appName: funds
+        subAppId: detail
+        class: info.magnolia.ui.contentapp.detail.action.EditItemActionDefinition
+      deletePortfolio:
+        label: Delete Portfolio
+        icon: icon-delete
+        class: info.magnolia.ui.framework.action.DeleteItemActionDefinition
+      addFund:
+        label: Add fund
+        icon: icon-add-item
+        nodeType: mgnl:fund
+        appName: funds
+        subAppId: detailFund
+        class: info.magnolia.ui.contentapp.detail.action.CreateItemActionDefinition
+      editFund:
+        label: Edit Fund
+        icon: icon-edit
+        appName: funds
+        subAppId: detailFund
+        class: info.magnolia.ui.contentapp.detail.action.EditItemActionDefinition
+      deleteFund:
+        icon: icon-delete
+        label: Delete Fund
+        class: info.magnolia.ui.framework.action.DeleteItemActionDefinition
+    actionbar:
+      sections:
+        root:
+          label: Portfolio
+          groups:
+            - name: addActions
+              items:
+                - name: addPortfolio
+          availability:
+            nodes: falseaddActions
+            root: true
+        portfolio:
+          label: Portfolio
+          groups:
+            - name: addActions
+              items:
+                - name: editPortfolio
+                - name: deletePortfolio
+                - name: addFund
+          availability:
+            nodeTypes:
+              - mgnl:portfolio
+        fund:
+          label: Fund
+          groups:
+            - name: addActions
+              items:
+                - name: editFund
+                - name: deleteFund
+          availability:
+            nodeTypes:
+              - mgnl:fund
+  detail:
+    subAppClass: info.magnolia.ui.contentapp.detail.DetailSubApp
+    class: info.magnolia.ui.contentapp.detail.DetailSubAppDescriptor
+    actions:
+      commit:
+        class: info.magnolia.ui.admincentral.dialog.action.SaveDialogActionDefinition
+        label: Save
+      cancel:
+        class: info.magnolia.ui.admincentral.dialog.action.CancelDialogActionDefinition
+        label: Cancel
+    contentConnector:
+      workspace: funds
+    editor:
+      nodeType:
+        icon: icon-items
+        name: mgnl:portfolio
+      form:
+        tabs:
+          - name: portfolioEntry
+            label: Portfolio Entry
+            fields:
+              - name: jcrName
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Name
+              - name: portfolioCode
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Portfolio Code
+      actions:
+        - name: commit
+        - name: cancel
+  detailFund:
+    subAppClass: info.magnolia.ui.contentapp.detail.DetailSubApp
+    class: info.magnolia.ui.contentapp.detail.DetailSubAppDescriptor
+    actions:
+      commit:
+        class: info.magnolia.ui.admincentral.dialog.action.SaveDialogActionDefinition
+        label: Save
+      cancel:
+        class: info.magnolia.ui.admincentral.dialog.action.CancelDialogActionDefinition
+        label: Cancel
+    contentConnector:
+      workspace: funds
+    editor:
+      nodeType:
+        icon: icon-items
+        name: mgnl:fund
+      form:
+        tabs:
+          - name: fundEntry
+            label: Fund Entry
+            fields:
+              - name: jcrName
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Name
+              - name:  isinNumber
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: ISIN number
+      actions:
+        - name: commit
+        - name: cancel
+

@@ -1,0 +1,144 @@
+appClass: info.magnolia.ui.contentapp.ContentApp
+class: info.magnolia.ui.contentapp.ContentAppDescriptor
+label: Recipes
+icon: icon-segmentation
+subApps:
+  browser:
+    label: Recipes
+    subAppClass: info.magnolia.ui.contentapp.browser.BrowserSubApp
+    class: info.magnolia.ui.contentapp.browser.BrowserSubAppDescriptor
+    contentConnector:
+      includeProperties: false
+      workspace: recipes
+      rootPath: /
+      defaultOrder: jcrName
+      nodeTypes:
+        - name: mgnl:recipe
+          icon: icon-asset-pool
+    workbench:
+      dropConstraintClass: info.magnolia.ui.workbench.tree.drop.AlwaysTrueDropConstraint
+      editable: false
+      contentViews:
+        - name: tree
+          class: info.magnolia.ui.workbench.tree.TreePresenterDefinition
+          columns: &myColumns
+            - name: title
+              sortable: true
+              label: Title
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+              expandRatio: 1
+            - name: description
+              label: Descripiton
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+              expandRatio: 2
+            - name: prepTime
+              sortable: true
+              label: Prep Time
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+            - name: cookTime
+              sortable: true
+              label: Cook Time
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+            - name: servingSize
+              sortable: true
+              label: Serving Size
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+        - name: list
+          class: info.magnolia.ui.workbench.list.ListPresenterDefinition
+          columns: *myColumns
+        - name: thumbnail
+          class: info.magnolia.ui.workbench.thumbnail.ThumbnailPresenterDefinition
+        - name: search
+          class: info.magnolia.ui.workbench.search.SearchPresenterDefinition
+          columns: *myColumns
+    actions:
+      loadRecipes:
+        command: loadRecipes
+        icon: icon-spinner-full
+        catalog: crescendo
+        class: info.magnolia.ui.framework.action.ActivationActionDefinition
+        label: Load Data
+        successMessage: Recipes loaded!
+        availability:
+          writePermissionRequired: true
+          root: true
+          nodes: false
+      viewRecipe:
+        subAppId: detail
+        icon: icon-edit
+        label: View
+        appName: recipes
+        class: info.magnolia.ui.contentapp.detail.action.EditItemActionDefinition
+        availability:
+          writePermissionRequired: true
+          nodeTypes:
+            - mgnl:recipe
+      deleteRecipe:
+        icon: icon-delete
+        label: Delete
+        class: info.magnolia.ui.framework.action.DeleteItemActionDefinition
+        availability:
+          writePermissionRequired: true
+    actionbar:
+      defaultAction: viewRecipe
+      sections:
+        - name: root
+          label: Recipes
+          groups:
+            - name: recipesActions
+              items:
+                - name: loadRecipes
+          availability:
+            root: true
+            nodes: false
+        - name: recipe
+          label: Recipe
+          groups:
+            - name: recipeActions
+              items:
+                - name: viewRecipe
+                - name: deleteRecipe
+          availability:
+            nodeTypes:
+              - mgnl:recipe
+  detail:
+    subAppClass: info.magnolia.ui.contentapp.detail.DetailSubApp
+    class: info.magnolia.ui.contentapp.detail.DetailSubAppDescriptor
+    actions:
+      cancel:
+        class: info.magnolia.ui.admincentral.dialog.action.CancelDialogActionDefinition
+        label: Close
+    contentConnector:
+      workspace: recipes
+    editor:
+      nodeType:
+        icon: icon-asset-pool
+        name: mgnl:recipe
+      form:
+        tabs:
+          - name: recipe
+            label: Recipe
+            fields:
+              - name: title
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Title
+                readOnly: true
+              - name: description
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Description
+                readOnly: true
+                rows: 5
+              - name: prepTime
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Prep Time
+                readOnly: true
+              - name: cookTime
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Cook Time
+                readOnly: true
+              - name: servingSize
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Serving Size
+                readOnly: true
+      actions:
+        - name: cancel

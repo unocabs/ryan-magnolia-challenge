@@ -1,0 +1,13 @@
+dialog: crescendo-magnolia-challenge:pages/global
+renderType: freemarker
+title: Fund Detail
+templateScript: /crescendo-magnolia-challenge/templates/pages/fund-detail/fund-detail.ftl
+areas:
+  main:
+    availableComponents:
+#      portfolioInfoEntryFormYAML:
+#        id: crescendo-magnolia-challenge:components/portfolio-info/portfolioInfoForm
+      portfolioInfoEntryFormSpring:
+        id: crescendo-magnolia-challenge-core:components/portfolio-info/portfolioInfoForm
+    type: single
+

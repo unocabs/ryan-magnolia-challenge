@@ -1,0 +1,105 @@
+appClass: info.magnolia.ui.contentapp.ContentApp
+class: info.magnolia.ui.contentapp.ContentAppDescriptor
+label: Sweepstakes
+icon: icon-choose-audience
+subApps:
+  browser:
+    label: Sweepstakes
+    subAppClass: info.magnolia.ui.contentapp.browser.BrowserSubApp
+    class: info.magnolia.ui.contentapp.browser.BrowserSubAppDescriptor
+    contentConnector:
+      includeProperties: false
+      workspace: sweepstakes
+      rootPath: /
+      defaultOrder: jcrName
+      nodeTypes:
+        - name: mgnl:sweepstakes-entry
+          icon: icon-user-public
+    workbench:
+      dropConstraintClass: info.magnolia.ui.workbench.tree.drop.AlwaysTrueDropConstraint
+      editable: false
+      contentViews:
+        - name: tree
+          class: info.magnolia.ui.workbench.tree.TreePresenterDefinition
+          columns: &myColumns
+            - name: firstName
+              label: First Name
+              sortable: true
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+            - name: lastName
+              sortable: true
+              label: Last Name
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+            - name: email
+              label: E-mail
+              sortable: true
+              class: info.magnolia.ui.workbench.column.definition.PropertyColumnDefinition
+        - name: list
+          class: info.magnolia.ui.workbench.list.ListPresenterDefinition
+          columns: *myColumns
+        - name: thumbnail
+          class: info.magnolia.ui.workbench.thumbnail.ThumbnailPresenterDefinition
+        - name: search
+          class: info.magnolia.ui.workbench.search.SearchPresenterDefinition
+          columns: *myColumns
+    actions:
+      editSweepstakesEntry:
+        subAppId: detail
+        icon: icon-edit
+        label: Edit
+        appName: sweepstakes
+        class: info.magnolia.ui.contentapp.detail.action.EditItemActionDefinition
+        availability:
+          writePermissionRequired: true
+          nodeTypes:
+            - mgnl:sweepstakes-entry
+      deleteSweepstakesEntry:
+        icon: icon-delete
+        label: Delete
+        class: info.magnolia.ui.framework.action.DeleteItemActionDefinition
+        availability:
+          writePermissionRequired: true
+    actionbar:
+      defaultAction: editSweepstakesEntry
+      sections:
+        - name: sweepstakesEntry
+          label: Sweepstakes Entry
+          groups:
+            - name: editActions
+              items:
+                - name: editSweepstakesEntry
+                - name: deleteSweepstakesEntry
+          availability:
+            nodeTypes:
+              - mgnl:sweepstakes-entry
+  detail:
+    subAppClass: info.magnolia.ui.contentapp.detail.DetailSubApp
+    class: info.magnolia.ui.contentapp.detail.DetailSubAppDescriptor
+    actions:
+      commit:
+        class: info.magnolia.ui.admincentral.dialog.action.SaveDialogActionDefinition
+      cancel:
+        class: info.magnolia.ui.admincentral.dialog.action.CancelDialogActionDefinition
+    contentConnector:
+      workspace: sweepstakes
+    editor:
+      nodeType:
+        icon: icon-items
+        name: mgnl:sweepstakes-entry
+      form:
+        tabs:
+          - name: sweepstakesEntry
+            label: SweepstakesEntry
+            fields:
+              - name: firstName
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: First Name
+              - name: lastName
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: Last Name
+              - name: email
+                class: info.magnolia.ui.form.field.definition.TextFieldDefinition
+                label: E-mail
+      actions:
+        - name: commit
+        - name: cancel

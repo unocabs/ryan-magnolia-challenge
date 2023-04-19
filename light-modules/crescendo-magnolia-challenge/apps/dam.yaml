@@ -1,0 +1,12 @@
+name: webdam
+label: Web Dam
+icon: icon-files
+appClass: info.magnolia.ui.contentapp.ContentApp
+class: info.magnolia.ui.contentapp.ContentAppDescriptor
+subApps:
+  browser:
+    label: Assets
+    subAppClass: info.magnolia.ui.contentapp.browser.BrowserSubApp
+    class: info.magnolia.ui.contentapp.browser.BrowserSubAppDescriptor
+#    contentConnector:
+#      class: com.crescendocollective.ui.webdam.app.contentconnector.WebDamBrowserContentConnectorDefinition

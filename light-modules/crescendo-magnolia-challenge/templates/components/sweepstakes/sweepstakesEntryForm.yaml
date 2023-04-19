@@ -1,0 +1,4 @@
+renderType: freemarker
+modelClass: com.crescendocollective.templates.SweepstakesEntryFormModel
+title: Sweepstakes Entry Form (YAML)
+templateScript: /crescendo-magnolia-challenge/templates/components/sweepstakes/sweepstakesEntryForm.ftl
